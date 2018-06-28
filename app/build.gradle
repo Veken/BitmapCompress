@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.veken.xm.bitmapcompress"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs 'libs'
+
+            // 这里没有添加libjpeg.so这个动态库，也是可以执行的。
+            // 原因在于android本身使用了 libjpeg.so这个动态库，
+            // 这个库存放在/system/lib下，如果我们没有加入
+            // libjpeg.so的话，他会去/system/lib下加载这个动态库
+
+            // 如果为了保险起见，也可将 libjpeg.so 一并加入到 libs文件夹下
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile files('libs/compress.jar')
+}
